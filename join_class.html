@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Join a Class | Limitless Motion Dance</title>
+<title>Class Schedule & Booking | Limitless Motion Dance</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -36,13 +37,49 @@ nav a {
 }
 
 .section {
-    padding:50px 20px;
+    padding:40px 20px;
     text-align:center;
 }
 
+h1, h2 {
+    margin-bottom:20px;
+}
+
+/* CLASS CARDS */
+.class-box {
+    background:#f2d6d2;
+    margin:15px auto;
+    padding:20px;
+    border-radius:12px;
+    max-width:420px;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+.available {
+    color:green;
+    font-weight:bold;
+}
+
+.full {
+    color:red;
+    font-weight:bold;
+}
+
+/* BUTTON */
+.btn {
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 20px;
+    background:#000;
+    color:#fff;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+/* FORM */
 form {
-    max-width:400px;
-    margin:0 auto;
+    max-width:420px;
+    margin:30px auto;
     background:#f2d6d2;
     padding:25px;
     border-radius:12px;
@@ -66,6 +103,14 @@ button {
     font-weight:bold;
 }
 
+/* SUCCESS MESSAGE */
+.success {
+    display:none;
+    color:green;
+    font-weight:bold;
+    margin-top:15px;
+}
+
 footer {
     text-align:center;
     padding:20px;
@@ -79,62 +124,105 @@ footer {
 <body>
 
 <header>
-    <img src="limitless_logo.jpeg.png" alt="Limitless Motion Logo" class="logo">
-    <h2>Join a Class</h2>
+    <img src="limitless_logo.jpeg.png" class="logo">
+    <h2>Limitless Motion Dance</h2>
 </header>
 
 <nav>
     <a href="index.html">Home</a>
     <a href="classes.html">Classes</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
 </nav>
 
 <section class="section">
-    <h1>Class Schedule & Booking</h1>
 
-    <div class="class-box">
-        <h3>Ballet</h3>
-        <p>Mon & Wed - 16:00</p>
-    </div>
+<h1>Class Schedule</h1>
 
-    <div class="class-box">
-        <h3>Hip Hop</h3>
-        <p>Tue & Thu - 17:00</p>
-    </div>
+<div class="class-box">
+    <h3>Ballet</h3>
+    <p>Mon & Wed - 16:00</p>
+    <p class="available">Available</p>
+    <a href="https://wa.me/27XXXXXXXXX?text=Hi%20I%20want%20to%20book%20Ballet" class="btn">Book via WhatsApp</a>
+</div>
 
-    <div class="class-box">
-        <h3>Contemporary</h3>
-        <p>Saturday - 10:00</p>
-    </div>
+<div class="class-box">
+    <h3>Hip Hop</h3>
+    <p>Tue & Thu - 17:00</p>
+    <p class="available">Available</p>
+    <a href="https://wa.me/27XXXXXXXXX?text=Hi%20I%20want%20to%20book%20Hip%20Hop" class="btn">Book via WhatsApp</a>
+</div>
 
-    <div class="class-box">
-        <h3>Jazz</h3>
-        <p>Friday - 16:30</p>
-    </div>
+<div class="class-box">
+    <h3>Contemporary</h3>
+    <p>Saturday - 10:00</p>
+    <p class="full">Fully Booked</p>
+</div>
 
-    <h2>Book Your Spot</h2>
+<div class="class-box">
+    <h3>Jazz</h3>
+    <p>Friday - 16:30</p>
+    <p class="available">Available</p>
+    <a href="https://wa.me/27XXXXXXXXX?text=Hi%20I%20want%20to%20book%20Jazz" class="btn">Book via WhatsApp</a>
+</div>
 
-    <form>
-        <input type="text" placeholder="Full Name" required>
-        <input type="tel" placeholder="Phone Number" required>
+<h2>Or Book Online</h2>
 
-        <select required>
-            <option value="">Select Class</option>
-            <option>Ballet</option>
-            <option>Hip Hop</option>
-            <option>Contemporary</option>
-            <option>Jazz</option>
-        </select>
+<form onsubmit="submitForm(event)">
+    <input type="text" placeholder="Full Name" required>
+    <input type="email" placeholder="Email Address" required>
+    <input type="tel" placeholder="Phone Number" required>
 
-        <button type="submit">Join Class</button>
-    </form>
+    <select id="classSelect" onchange="updateTimes()" required>
+        <option value="">Select Class</option>
+        <option value="Ballet">Ballet</option>
+        <option value="Hip Hop">Hip Hop</option>
+        <option value="Contemporary">Contemporary</option>
+        <option value="Jazz">Jazz</option>
+    </select>
+
+    <select id="timeSelect" required>
+        <option value="">Select Time</option>
+    </select>
+
+    <button type="submit">Confirm Booking</button>
+
+    <p class="success" id="successMsg">✅ Booking request sent! We’ll contact you soon.</p>
+</form>
 
 </section>
 
 <footer>
     <p>© 2026 Limitless Motion Dance</p>
 </footer>
+
+<script>
+function updateTimes() {
+    const classSelect = document.getElementById("classSelect").value;
+    const timeSelect = document.getElementById("timeSelect");
+
+    timeSelect.innerHTML = "<option value=''>Select Time</option>";
+
+    const schedules = {
+        "Ballet": ["Mon 16:00", "Wed 16:00"],
+        "Hip Hop": ["Tue 17:00", "Thu 17:00"],
+        "Contemporary": ["Saturday 10:00"],
+        "Jazz": ["Friday 16:30"]
+    };
+
+    if (schedules[classSelect]) {
+        schedules[classSelect].forEach(time => {
+            let option = document.createElement("option");
+            option.value = time;
+            option.textContent = time;
+            timeSelect.appendChild(option);
+        });
+    }
+}
+
+function submitForm(event) {
+    event.preventDefault();
+    document.getElementById("successMsg").style.display = "block";
+}
+</script>
 
 </body>
 </html>
