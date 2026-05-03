@@ -18,12 +18,44 @@ body {
     align-items:center;
     height:100vh;
     text-align:center;
+    overflow:hidden;
+}
+
+/* SOFT BACKGROUND SHAPES */
+body::before {
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:rgba(255,255,255,0.1);
+    border-radius:50%;
+    top:-100px;
+    left:-100px;
+    filter:blur(80px);
+}
+
+body::after {
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:rgba(0,0,0,0.1);
+    border-radius:50%;
+    bottom:-100px;
+    right:-100px;
+    filter:blur(80px);
+}
+
+/* CONTAINER */
+.container {
+    position:relative;
+    z-index:1;
+    animation:fadeIn 1.5s ease-in-out;
 }
 
 /* LOGO */
 .logo {
-    max-width:280px;
-    animation:fadeIn 1.5s ease-in-out;
+    max-width:260px;
 }
 
 /* TEXT */
@@ -31,6 +63,7 @@ h1 {
     margin-top:20px;
     font-weight:600;
     color:#222;
+    letter-spacing:1px;
 }
 
 /* BUTTON */
@@ -43,31 +76,47 @@ h1 {
     text-decoration:none;
     border-radius:5px;
     font-weight:bold;
+    transition:0.3s;
 }
 
-/* FADE ANIMATION */
+.btn:hover {
+    background:#333;
+}
+
+/* ANIMATIONS */
 @keyframes fadeIn {
-    from {opacity:0; transform:scale(0.9);}
+    from {opacity:0; transform:scale(0.95);}
     to {opacity:1; transform:scale(1);}
+}
+
+.fade-out {
+    animation:fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    to {opacity:0;}
 }
 </style>
 
-<!-- AUTO REDIRECT AFTER 3 SECONDS -->
 <script>
 setTimeout(function(){
-    window.location.href = "home.html";
-}, 3000);
+    document.body.classList.add("fade-out");
+
+    setTimeout(function(){
+        window.location.href = "home.html";
+    }, 800);
+
+}, 2500);
 </script>
 
 </head>
 
 <body>
 
-<div>
+<div class="container">
     <img src="limitless_logo.png" alt="Limitless Motion Logo" class="logo">
     <h1>Move Without Limits</h1>
 
-    <!-- Manual button (in case user doesn't want to wait) -->
     <a href="home.html" class="btn">Enter Site</a>
 </div>
 
