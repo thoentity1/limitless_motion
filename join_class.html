@@ -194,33 +194,7 @@ footer {
 </footer>
 
     <script>
-function submitForm(event) {
-    event.preventDefault();
-
-    const name = document.querySelector('input[type="text"]').value;
-    const email = document.querySelector('input[type="email"]').value;
-    const phone = document.querySelector('input[type="tel"]').value;
-    const classType = document.getElementById("classSelect").value;
-    const time = document.getElementById("timeSelect").value;
-
-    const message = `Hi, I would like to book a class:%0A
-Name: ${name}%0A
-Phone: ${phone}%0A
-Email: ${email}%0A
-Class: ${classType}%0A
-Time: ${time}`;
-
-    const whatsappNumber = "27XXXXXXXXX"; // ← PUT YOUR NUMBER HERE
-
-    const url = `https://wa.me/${whatsappNumber}?text=${message}`;
-
-    document.getElementById("successMsg").style.display = "block";
-
-    setTimeout(() => {
-        window.open(url, '_blank');
-    }, 500);
-}
-</script>
+<script>
 function updateTimes() {
     const classSelect = document.getElementById("classSelect").value;
     const timeSelect = document.getElementById("timeSelect");
@@ -246,9 +220,28 @@ function updateTimes() {
 
 function submitForm(event) {
     event.preventDefault();
+
+    const name = document.querySelector('input[type="text"]').value;
+    const email = document.querySelector('input[type="email"]').value;
+    const phone = document.querySelector('input[type="tel"]').value;
+    const classType = document.getElementById("classSelect").value;
+    const time = document.getElementById("timeSelect").value;
+
+    const message = `Hi, I would like to book a class:%0A
+Name: ${name}%0A
+Phone: ${phone}%0A
+Email: ${email}%0A
+Class: ${classType}%0A
+Time: ${time}`;
+
+    const whatsappNumber = "27XXXXXXXXX"; // PUT YOUR NUMBER
+
+    const url = `https://wa.me/${whatsappNumber}?text=${message}`;
+
     document.getElementById("successMsg").style.display = "block";
+
+    setTimeout(() => {
+        window.open(url, '_blank');
+    }, 500);
 }
 </script>
-
-</body>
-</html>
