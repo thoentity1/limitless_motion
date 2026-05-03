@@ -45,7 +45,6 @@ h1, h2 {
     margin-bottom:20px;
 }
 
-/* CLASS CARDS */
 .class-box {
     background:#f2d6d2;
     margin:15px auto;
@@ -60,12 +59,6 @@ h1, h2 {
     font-weight:bold;
 }
 
-.full {
-    color:red;
-    font-weight:bold;
-}
-
-/* BUTTON */
 .btn {
     display:inline-block;
     margin-top:10px;
@@ -76,7 +69,6 @@ h1, h2 {
     border-radius:5px;
 }
 
-/* FORM */
 form {
     max-width:420px;
     margin:30px auto;
@@ -103,7 +95,6 @@ button {
     font-weight:bold;
 }
 
-/* SUCCESS MESSAGE */
 .success {
     display:none;
     color:green;
@@ -130,7 +121,7 @@ footer {
 
 <nav>
     <a href="index.html">Home</a>
-    </nav>
+</nav>
 
 <section class="section">
 
@@ -154,7 +145,7 @@ footer {
     <h3>Contemporary</h3>
     <p>Saturday - 10:00</p>
     <p class="available">Available</p>
-    <a href="https://wa.me/27832142201?text=Hi%20I%20want%20to%20book%20Hip%20Hop" class="btn">Book via WhatsApp</a>
+    <a href="https://wa.me/27832142201?text=Hi%20I%20want%20to%20book%20Contemporary" class="btn">Book via WhatsApp</a>
 </div>
 
 <div class="class-box">
@@ -182,9 +173,9 @@ footer {
         <option value="">Select Time</option>
     </select>
 
-    <button type="submit">Confirm Booking</button>
+    <button type="submit">Send Booking on WhatsApp</button>
 
-    <p class="success" id="successMsg">✅ Booking request sent! We’ll contact you soon.</p>
+    <p class="success" id="successMsg">✅ Redirecting to WhatsApp...</p>
 </form>
 
 </section>
@@ -193,7 +184,6 @@ footer {
     <p>© 2026 Limitless Motion Dance</p>
 </footer>
 
-    <script>
 <script>
 function updateTimes() {
     const classSelect = document.getElementById("classSelect").value;
@@ -210,7 +200,7 @@ function updateTimes() {
 
     if (schedules[classSelect]) {
         schedules[classSelect].forEach(time => {
-            let option = document.createElement("option");
+            const option = document.createElement("option");
             option.value = time;
             option.textContent = time;
             timeSelect.appendChild(option);
@@ -222,26 +212,29 @@ function submitForm(event) {
     event.preventDefault();
 
     const name = document.querySelector('input[type="text"]').value;
-    const email = document.querySelector('input[type="email"]').value;
     const phone = document.querySelector('input[type="tel"]').value;
     const classType = document.getElementById("classSelect").value;
     const time = document.getElementById("timeSelect").value;
 
-    const message = `Hi, I would like to book a class:%0A
-Name: ${name}%0A
-Phone: ${phone}%0A
-Email: ${email}%0A
-Class: ${classType}%0A
-Time: ${time}`;
+    const whatsappNumber = "27832142201";
 
-    const whatsappNumber = "27XXXXXXXXX"; // PUT YOUR NUMBER
+    const message = encodeURIComponent(
+`Hi, I would like to book a class:
+Name: ${name}
+Phone: ${phone}
+Class: ${classType}
+Time: ${time}`
+    );
 
     const url = `https://wa.me/${whatsappNumber}?text=${message}`;
 
     document.getElementById("successMsg").style.display = "block";
 
     setTimeout(() => {
-        window.open(url, '_blank');
+        window.open(url, "_blank");
     }, 500);
 }
 </script>
+
+</body>
+</html>
